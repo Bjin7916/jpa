@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleag.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>LIST ASYNC</title>
+</head>
+
+<body>
+<ul id="list-container"></ul>
+<button id="more">더보기</button>
+</body>
+
+
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+
+<script>
+    const container = document.getElementById("list-container");
+    const more = document.getElementById("more");
+
+    let page = 0;
+
+    function getList(){
+        fetch(`api/list?page=${page}`)
+            .then((response) => response.json())
+            .then((products){
+                let text = ``;
+                products.content.forEach(product => {
+                    text += `
+                        <tr>
+                            <td>${product.id}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    `
+                })
+                container.innerHTML += text;
+        })
+    }
+
+
+    more.addEventListener("click", function(){
+        page++;
+        getList();
+    })
+
+
+
+
+</script>
+
+
+</html>
